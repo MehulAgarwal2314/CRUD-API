@@ -10,16 +10,16 @@ const port=process.env.PORT||3000;
 
 const username=process.env.MONGODB_USERNAME;
 const password=process.env.MONGODB_PASSWORD;
-mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.bdbw5.mongodb.net/registartionDB`,{
+mongoose.connect(`mongodb+srv://${username}:${password}@cluster0.7zrhbse.mongodb.net/registrationDB`,{
     useNewUrlParser:true,
     useUnifiedTopology:true,
 });
 
-const registrationSchema=new mongoose.schema({
+const registrationSchema=new mongoose.Schema({
     firstname:String,
     lastname:String,
     email:String,
-    password:String,
+    password:String
 })
 
 const Registration =mongoose.model("Registration",registrationSchema);
@@ -27,7 +27,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 
 app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"./Home.js");
+    res.sendFile(__dirname+"./Backend/Home.js");
 })
 
 app.post("/register",async(req,res)=>{
@@ -42,14 +42,18 @@ app.post("/register",async(req,res)=>{
             password
          });
          await registrationdata.save();
-         res.redirect("/");
+        //  res.redirect("/");
      }
      else{
-        alert("User already exists");
+        console.log("User already exists");
      }
     }
     catch(error){
         console.log(error);
    res.redirect("error")
     }
+})
+
+app.listen(port,()=>{
+    console.log(`server is running on ${port}`);
 })
