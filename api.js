@@ -2,9 +2,11 @@ const express=require("express");
 const mongoose=require("mongoose");
 const bodyParser=require("body-parser");
 const dotenv=require("dotenv");
+const cors = require('cors');
 
 const app=express();
 dotenv.config();
+app.use(cors());
 
 const port=process.env.PORT||3000;
 
@@ -26,9 +28,9 @@ const Registration =mongoose.model("Registration",registrationSchema);
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 
-app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"./Backend/Home.js");
-})
+// app.get("/",(req,res)=>{
+//     res.sendFile(__dirname+"./Backend/Home.js");
+// })
 
 app.post("/register",async(req,res)=>{
     try{
