@@ -28,10 +28,19 @@ const Registration =mongoose.model("Registration",registrationSchema);
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 
-app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"./Frontend/Home.js");
-})
 
+app.get("/registrations", async (req, res) => {
+    try {
+        // Fetch all registrations from the database
+        const registrations = await Registration.find();
+        // Send the registrations as a response
+        res.json(registrations);
+    } catch (error) {
+        // Handle errors
+        console.error(error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+});
 app.post("/register",async(req,res)=>{
     try{
      const {firstname,lastname,email,password}=req.body;
@@ -44,7 +53,6 @@ app.post("/register",async(req,res)=>{
             password
          });
          await registrationdata.save();
-        //  res.redirect("/");
      }
      else{
         console.log("User already exists");
@@ -52,7 +60,7 @@ app.post("/register",async(req,res)=>{
     }
     catch(error){
         console.log(error);
-   res.redirect("error")
+//    res.redirect("error")
     }
 })
 
