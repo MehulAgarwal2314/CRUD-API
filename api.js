@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json());
 
 app.get("/",(req,res)=>{
-    res.sendFile(__dirname+"./Backend/Home.js");
+    res.sendFile(__dirname+"./Frontend/Home.js");
 })
 
 app.post("/register",async(req,res)=>{
